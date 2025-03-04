@@ -26,6 +26,7 @@ namespace Holistic_Mission
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<IOrderRepo, OrderRepo>();
             builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
             builder.Services.AddScoped<IProductRepo, ProductRepo>();
             builder.Services.AddScoped<IShoppingCartRepo, ShoppingCartRepo>();

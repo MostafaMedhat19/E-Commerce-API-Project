@@ -11,11 +11,11 @@ namespace Holistic_Mission.Controllers
     {   
         public OrdersController(IOrderRepo orderRepo)
         {
-             orderRepo= _orderRepo;
+             _orderRepo = orderRepo;
         }
         private readonly IOrderRepo _orderRepo;
 
-        [HttpGet]
+        [HttpGet("GetOrders")]
         public ActionResult<List<OrderResponserDTo>> GetOrders()
         {
            
@@ -31,8 +31,8 @@ namespace Holistic_Mission.Controllers
            
         }
 
-        [HttpPost]
-        public ActionResult AddOrder([FromBody] OrderRequstDto orderDto)
+        [HttpPost("AddOrder")]
+        public ActionResult AddOrder([FromBody] OrderResponserDTo orderDto)
         {
             if (orderDto == null)
             {
@@ -59,6 +59,16 @@ namespace Holistic_Mission.Controllers
              return Accepted(); 
             
          
+        }
+        [HttpDelete("{id}")]
+        public ActionResult DeleteOrder(int id)
+        {
+            var result = _orderRepo.DeleteOrder(id);
+            if (result == false)
+            {
+                return NotFound();
+            }
+            return Ok();
         }
     }
 

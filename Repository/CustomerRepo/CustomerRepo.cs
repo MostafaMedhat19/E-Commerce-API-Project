@@ -25,7 +25,7 @@ namespace Holistic_Mission.Repository.CustomerRepo
                phone=customerRequstDto.phone 
                 
             };
-            _context.Add(Addcustomer);
+            _context.customers.Add(Addcustomer);
             _context.SaveChanges();
 
 

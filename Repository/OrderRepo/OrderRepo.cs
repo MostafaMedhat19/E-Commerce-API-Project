@@ -5,64 +5,57 @@ using Holistic_Mission.DTOs.ProductDto;
 using Holistic_Mission.DTOs.ShoppinCartDTO;
 using Holistic_Mission.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Numerics;
 
 namespace Holistic_Mission.Repository.OrderRepo
 {
-    public class OrderRepo 
+    public class OrderRepo : IOrderRepo
     {
         private readonly ApplicationDbContext _context;
         public OrderRepo(ApplicationDbContext context)
         {
             _context = context;
         }
+      
+
         public void AddOrder(OrderResponserDTo orderDto)
         {
+            var customer = _context.customers.FirstOrDefault(p => p.Id == orderDto.CustomerforOrderDto.Id);
+            customer.Name = customer.Name;
+            customer.phone = customer.phone;
+            customer.Email = customer.Email;
+            _context.customers.Update(customer);
             Order order = new Order()
             {
                 TotalPrice = orderDto.TotalPrice,
-                Products = orderDto.ProductRequstDto.Select( p=>new Product
+                Products = orderDto.ProductRequstDto.Select(p => new Product
                 {
 
                     Name = p.Name,
-                    stockQuantity=p.stockQuantity,
+                    stockQuantity = p.stockQuantity,
                     Description = p.Description,
-                    
+
                     
                 }).ToList(),
-
-                customer= new Customer
-                {
-                    Name=orderDto.CustomerforOrderDto.Name,
-                    phone=orderDto.CustomerforOrderDto.phone,
-                    //Email=orderDto.CustomerforOrderDto.Email,
-                    ShoppingCart = new ShoppingCart
-                    {
-                        NumOfItems=orderDto.CustomerforOrderDto.ShoppingCartdto.NumOfItems,
-                    }
-
-                }
+                
+                customer = customer,
 
             };
+            _context.orders.Add(order);
+            _context.SaveChanges();
         }
 
-        public void AddOrder(OrderRequstDto orderDto)
+        public bool DeleteOrder(int id)
         {
-
-            Order order = new Order()
+           var order = _context.orders.Include(x=>x.Products).Include(x=> x.customer).ThenInclude(x=>x.ShoppingCart).FirstOrDefault(x=>x.Id == id);
+            if (order == null)
             {
-                TotalPrice = orderDto.TotalPrice,
-                Products = orderDto.ProductRequstdto.Select(p => new Product
-                {
-                    Name = p.Name,
-                    Description = p.Description,
-                    stockQuantity = p.stockQuantity,
-
-                }).ToList()
-            };
-             
-            _context.Add(order);
-
+                throw new ArgumentException($"Order with {id} not found");
+               
+            }
+            _context.orders.Remove(order);
             _context.SaveChanges();
+            return true;
         }
 
         public List<OrderResponserDTo> GetOrders(OrderResponserDTo orderDto)
@@ -115,7 +108,7 @@ namespace Holistic_Mission.Repository.OrderRepo
                 stockQuantity=p.stockQuantity,
 
             }).ToList();
-            _context.Update(order);
+            _context.orders.Update(order);
             _context.SaveChanges();
         }
     }

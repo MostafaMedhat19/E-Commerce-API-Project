@@ -4,9 +4,10 @@ namespace Holistic_Mission.Repository.OrderRepo
 {
     public interface IOrderRepo
     {
-        List<OrderResponserDTo> GetOrders(OrderResponserDTo orderDto);
-        void AddOrder (OrderRequstDto orderDto);
-        void UpdateOrder (OrderRequstDto orderDto,int id);
+       public List<OrderResponserDTo> GetOrders(OrderResponserDTo orderDto);
+        public void AddOrder(OrderResponserDTo orderDto); 
+       public void UpdateOrder (OrderRequstDto orderDto,int id);
+       public bool DeleteOrder(int id);
 
     }
 }

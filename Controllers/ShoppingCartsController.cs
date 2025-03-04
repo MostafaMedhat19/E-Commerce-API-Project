@@ -11,13 +11,13 @@ namespace Holistic_Mission.Controllers
     {
         private readonly IShoppingCartRepo _shoppingCartRepo;
 
-
+        
         public ShoppingCartsController(IShoppingCartRepo shoppingCartRepo)
         {
-             shoppingCartRepo = _shoppingCartRepo;
+            _shoppingCartRepo = shoppingCartRepo  ;
 
         }
-        [HttpPost]
+        [HttpPost("AddShoppingCart")]
         public IActionResult AddShoppingCart(ShoppingCartRequstDto shoppingCartRequstDto)
         {
             if (shoppingCartRequstDto == null)

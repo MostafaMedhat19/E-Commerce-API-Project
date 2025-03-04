@@ -55,15 +55,15 @@ namespace Holistic_Mission.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("TotalPrice")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("customerId")
+                    b.Property<int>("TotalPrice")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("customerId");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("orders");
                 });
@@ -124,7 +124,7 @@ namespace Holistic_Mission.Migrations
                 {
                     b.HasOne("Holistic_Mission.Models.Customer", "customer")
                         .WithMany("Orders")
-                        .HasForeignKey("customerId");
+                        .HasForeignKey("CustomerId");
 
                     b.Navigation("customer");
                 });

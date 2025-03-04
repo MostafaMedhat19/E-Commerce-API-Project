@@ -13,11 +13,13 @@ namespace Holistic_Mission.Repository.ShoppingCartRepo
         }
         public void AddShoppingCart(ShoppingCartRequstDto shoppingCartRequstDto)
         {
+          
             var shoppingCart = new ShoppingCart
             {
                 NumOfItems= shoppingCartRequstDto.NumOfItems,
+                CustomerId = shoppingCartRequstDto.CustomerId,
             };
-            _context.Add(shoppingCart);
+            _context.shoppingCarts.Add(shoppingCart);
             _context.SaveChanges();
         }
     }

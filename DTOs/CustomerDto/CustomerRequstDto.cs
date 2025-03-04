@@ -13,5 +13,6 @@ namespace Holistic_Mission.DTOs.CustomerDto
         [EmailAddress]
         public string Email { get; set; }
         
+        
     }
 }

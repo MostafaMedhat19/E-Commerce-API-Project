@@ -20,7 +20,7 @@ namespace Holistic_Mission.Repository.ProductRepo
                 Name = ProductRequstDto.Name,   
                 stockQuantity= ProductRequstDto.stockQuantity,
             };
-            _context.Add(product);
+            _context.products.Add(product);
             _context.SaveChanges();
         }
     }

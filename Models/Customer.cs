@@ -15,7 +15,7 @@ namespace Holistic_Mission.Models
         [EmailAddress]
         public string Email { get; set; }
         public ShoppingCart ?ShoppingCart { get; set; }
-        public IList<Order>? Orders { get; set; }    = new List<Order>();
+        public IList<Order>? Orders { get; set; }
 
     }
 }
